@@ -64,8 +64,10 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
   - Modified weight decay to 6e-5 or larger with 0.08 learning rate or more. 
   - pos_weight reduced to 0.3.
   
-![Accuracy Curves](resources/accuracy%20curves.png?raw=true)**Orange - Validation accuracy; Blue - Training Accuracy**
+![Accuracy Curves](resources/accuracy%20curves.png?raw=true)
+<p align="center"><b>Orange - Validation accuracy; Blue - Training Accuracy<b></p>
 
-![Loss Curve](resources/loss%20curve.png?raw=true)**Loss Curve**
+![Loss Curve](resources/loss%20curve.png?raw=true)
+<p align="center"><b>Loss Curve<b></p>
   
 
