@@ -12,3 +12,22 @@ Further, liveness detection can be incorporated into the system to make it more 
 ## Approach:
 
 Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-trained ResNet50 (thus, fine tuning was not performed) and removing the last layer. Two architectures were trained by using either 4 fully connected layers (*model0_100.pth* and *model1_100.pth*) or 3 fully connected layers after ResNet50 (*model2_100.pth* and *model3 reg 6e-5.pth*). In both the cases, features are extracted for both input image and database image using pre-trained network. The outputs are merged and passed through two fully connected layers and finally passed through a logistic regression function for binary classification (*whether the images are from the same user or not*).
+
+![Scheme 1](resources/classifier%201.JPG?raw=true)*Scheme 1*
+
+![Scheme 2](resources/classifier%202.JPG?raw=true)*Scheme 2*
+
+The following datasets are relevant to the problem at hand:
+
+* [**IIT Delhi dataset**](#https://www4.comp.polyu.edu.hk/~csajaykr/IITD/Database_Iris.htm) - <ins> NIR images</ins>. 224 subjects, but excluded subjects 1-13, 27,55,65. Highly detailed images of iris but lacks any peripheral features which is not expected to be the case in deployment (unless images are captured from very small distance). To be augmented with another dataset which contains images captured from distance. It should be useful to teach model to identify the iris as a major differentiating factor. 
+
+* **Multimedia Universtiy (MMU 2) dataset** - <ins> NIR images</ins>. MMU.2 iris database consists of 995 iris images. The iris images are collected using Panasonic BM-ET100US Authenticam and its operating range is even farther with a distance of 47-53 cm away from the user. These iris images are contributed by 100 volunteers with different age and nationality. They come from Asia, Middle East, Africa and Europe. Each of them contributes 5 iris images for each eye. Used for training. Slightly noisy dataset as iris features are not very clear and varying image conditions.
+
+* [**CASIA Iris v1 to v4**][http://biometrics.idealtest.org/dbDetailForUser.do?id=4] - <ins> NIR Images</ins>. Contains both images at a distance and under various lighting conditions. Although not used for training, this would lead to significant improvement in model performance if used together with the above two datasets. One should note that subjects are predominantly east asian, so one must check for bias.
+
+* [**The Hong Kong Polytechnic University Cross-Spectral Iris Images Database**](#https://www4.comp.polyu.edu.hk/~csajaykr/polyuiris.htm) - <ins> both NIR and Visible Images</ins>. This database of iris images has been acquired under simultaneous bi-spectral imaging, from both right and left eyes. This database consists of total 12,540 iris images which are acquired with 15 instances from 209 different subjects.
+
+* [**UBIRIS v2**](#http://iris.di.ubi.pt/ubiris2.html) - <ins> Visible Images</ins>. Noisy Dataset with various angles. Best reflects real conditions of images captured in visible wavelength from a distance. Weights from a model trained to identify iris in NIR might be initialized and then training can be done on a combined UBIRIS and VISOB dataset.
+
+* [**VISOB**](#https://sce.umkc.edu/research-sites/cibit/visob_v1.html) - <ins> Visible Images</ins>. Noisy images but very large dataset of eye images captured through smartphones.
+
