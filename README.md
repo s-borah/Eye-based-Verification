@@ -21,7 +21,7 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 
 * [**IIT Delhi dataset**](https://www4.comp.polyu.edu.hk/~csajaykr/IITD/Database_Iris.htm) - <ins> NIR images</ins>. 224 subjects, but excluded subjects 1-13, 27,55,65. Highly detailed images of iris but lacks any peripheral features which is not expected to be the case in deployment (unless images are captured from very small distance). To be augmented with another dataset which contains images captured from distance. It should be useful to teach model to identify the iris as a major differentiating factor. 
 
-* **Multimedia Universtiy (MMU 2) dataset** - <ins> NIR images</ins>. MMU.2 iris database consists of 995 iris images. The iris images are collected using Panasonic BM-ET100US Authenticam and its operating range is even farther with a distance of 47-53 cm away from the user. These iris images are contributed by 100 volunteers with different age and nationality. They come from Asia, Middle East, Africa and Europe. Each of them contributes 5 iris images for each eye. Used for training. Slightly noisy dataset as iris features are not very clear and varying image conditions.
+* **Multimedia Universtiy (MMU) dataset** - <ins> NIR images</ins>. MMU.2 iris database consists of 995 iris images. The iris images are collected using Panasonic BM-ET100US Authenticam and its operating range is even farther with a distance of 47-53 cm away from the user. These iris images are contributed by 100 volunteers with different age and nationality. They come from Asia, Middle East, Africa and Europe. Each of them contributes 5 iris images for each eye. Used for training. Slightly noisy dataset as iris features are not very clear and varying image conditions.
 
 * [**CASIA Iris v1 to v4**](http://biometrics.idealtest.org/dbDetailForUser.do?id=4) - <ins> NIR Images</ins>. Contains both images at a distance and under various lighting conditions. Although not used for training, this would lead to significant improvement in model performance if used together with the above two datasets. One should note that subjects are predominantly east asian, so one must check for bias.
 
@@ -43,31 +43,49 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
   - Similarity function approach was used for training. Outputs from the pre-trained Siamese network were compared using 3 linear layers.
   - Accuracy of 95% was obtained on the test set (comprising images on the same dataset). Training was done for a total of 100 epochs.
   - Optimizer = SGD; Learning Rate = 0.01; 
-  - 70% accuracy on the MMU2 dataset
+  - 70% accuracy on the MMU dataset
 
-* **Model1_100 epochs** (Scheme 1) - Training was done on the IITD dataset + 0.7 \* MMU2 dataset (11,106 training sets total). 
+* **Model1_100 epochs** (Scheme 1) - Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). 
   - Optimizer = SGD; Learning rate - 0.01;
   - Training accuracy 100% and Validation Accuracy is 89% which indicates overfitting of the model. 
   - Batch size of 256 used for training.
   
-* **Model2_100 epochs** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU2 dataset (11,106 training sets total). 
+* **Model2_100 epochs** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). 
   - Weight decay added with parameter 1e-5. Increased learning rate to 0.02 with decay.
   - Adding regularization in model2 to reduce overfitting and removing one layer from the model.
   - Parameter, pos_weight = 0.9 in the cost function for increasing the specificity.
   
-* **Model2_60 epochs** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU2 dataset (11,106 training sets total). Validation on 0.3 \* MMU2 dataset.
+* **Model2_60 epochs** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). Validation on 0.3 \* MMU dataset.
   - Slightly increased weight decay to 3e-5. Learning rate increased to 0.04.
   - Pos_weight in cost fn further decreased to 0.5 to increase specificity at the cost of sensitivity.
   - Training accuracy 99.78% and validation accuracy 91.54% at 60 epochs by early stopping.
   
-* **Model3** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU2 dataset (11,106 training sets total). Validation on 0.3 \* MMU2 dataset
+* **Model3** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). Validation on 0.3 \* MMU dataset
   - Modified weight decay to 6e-5 or larger with 0.08 learning rate or more. 
   - pos_weight reduced to 0.3.
   
+**Note** - most of the code was implemented using google colab GPU's.
+
 ![Accuracy Curves](resources/accuracy%20curves.png?raw=true)
 <p align="center"><b>Orange - Validation accuracy; Blue - Training Accuracy<b></p>
 
 ![Loss Curve](resources/loss%20curve.png?raw=true)
 <p align="center"><b>Loss Curve<b></p>
-  
 
+## Learnings:
+
+* Positive image sets constructed from IITD and MMU are very similar to each other (probably because images were collected through a burst of shots). This is very unlikely to be the real use case scenario! Other datasets like Poly U Cross or UBIRIS dataset to be used to make sure that there are significant differences between images of the same subject for training.
+
+* Image augmentation not implemented.
+
+* Only a few Negative image combinations were considered, equal to the maximum number of possible positive image sets of the same subject. Suggest use of many more negative sets which will also ensure a high precision (specificity).
+
+* After training, another exercise can be to verify which regions of the image are being used for classification.
+
+## References:
+
+* [DeepIris paper](https://arxiv.org/abs/1907.09380): Proposed an iris recognition framework based on transfer learning approach. They fine-tune a pre-trained convolutional neural network (ResNet 50 - trained on ImageNet), on a popular iris recognition dataset (IIT Delhi iris dataset)
+
+* [Iris Recognition With Off-the-Shelf CNN Features](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8219390): Performed iris segmentation but suggests middle layers of such deep learning architectures might give better performance since iris does not contain large complexity as was in the case of imageNet trained networks.
+
+* [An end to end Iris Recognition system using Pytorch](https://github.com/thuyngch/Iris-Recognition-PyTorch): Torch implementation on efficient net using MMU and CASIA1 datasets.
