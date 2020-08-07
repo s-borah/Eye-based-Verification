@@ -70,7 +70,7 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 <p align="center"><b>Orange - Validation accuracy; Blue - Training Accuracy<b></p>
 
 ![Loss Curve](resources/loss%20curve.png?raw=true)
-<p align="center"><b>Loss Curve<b></p>
+<p align="center"><b>Loss Curve</b></p>
 
 ## Learnings:
 
