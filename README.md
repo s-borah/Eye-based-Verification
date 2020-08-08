@@ -31,6 +31,8 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 
 * [**VISOB**](https://sce.umkc.edu/research-sites/cibit/visob_v1.html) - <ins> Visible Images</ins>. Noisy images but very large dataset of eye images captured through smartphones.
 
+> Datasets are not included in repo as they are not available in general public domain and access is given on case to case basis (refer the links above for procedure on applying for access to the datasets).
+
 ### For verifying two images if they are same or not there are essentially two approaches:
 
 * Define Anchor, Positive and Negative sets of images from dataset and optimize triplet loss function. But one must pick these from dataset only for the images which are harder to train and are close in distance.
@@ -74,11 +76,19 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 
 ## Code Present in Repository:
 
-* **Train classifier on MMU2 and IITD ver 1.ipynb**: Training and testing Code for the mentioned datasets.
+* **Extract eyes from Frontal Faces using OpenCV**: Simple Demonstration of Extracting eyes from the frontal face images
+
+* **Save iitd database to h5.ipynb**: Initial training of model0 and model1 involved complete loading of IITD dataset to memory and then making an array containing all possible image sets (warning: bad idea obviously and gets pretty close to overloading a 12GB RAM). For this purpose, this code was implemented to store iitd dataset as an h5 file. Later dataloader class was implemented to read images from disk (included as part of the training code).
+
+* **Training on IITD dataset.ipynb**: Training of model0 on IITD dataset.
+
+* **Testing model1 (Scheme 1) on MMU2 dataloader.ipynb**: Dataloader class for MMU2 dataset created and tested on perviously trained model 1.
+
+* **Train classifier on MMU2 and IITD ver 1.ipynb (model 1, 2 and 3)**: Training and testing Code for the mentioned datasets. Master training file.
 
 ## Learnings & Future Steps:
 
-* Use of lighter and more efficient Convolution Networks trained on ResNet to be explored for deployment.
+* Use of lighter and more efficient Convolution Networks trained on ImageNet to be explored for deployment.
 
 * Positive image sets constructed from IITD and MMU are very similar to each other (probably because images were collected through a burst of shots). This is very unlikely to be the real use case scenario! Other datasets like Poly U Cross or UBIRIS dataset to be used to make sure that there are significant differences between images of the same subject for training.
 
