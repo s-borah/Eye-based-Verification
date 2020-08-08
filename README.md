@@ -72,15 +72,25 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 ![Loss Curve](resources/loss%20curve.png?raw=true)
 <p align="center"><b>Model3: Loss Curve</b></p>
 
-## Learnings:
+## Code Present in Repository:
+
+* **Train classifier on MMU2 and IITD ver 1.ipynb**: Training and testing Code for the mentioned datasets.
+
+## Learnings & Future Steps:
+
+* Use of lighter and more efficient Convolution Networks trained on ResNet to be explored for deployment.
 
 * Positive image sets constructed from IITD and MMU are very similar to each other (probably because images were collected through a burst of shots). This is very unlikely to be the real use case scenario! Other datasets like Poly U Cross or UBIRIS dataset to be used to make sure that there are significant differences between images of the same subject for training.
 
-* Image augmentation not implemented.
+* Image augmentation not implemented. This can be done.
 
 * Only a few Negative image combinations were considered, equal to the maximum number of possible positive image sets of the same subject. Suggest use of many more negative sets which will also ensure a high precision (specificity).
 
 * After training, another exercise can be to verify which regions of the image are being used for classification.
+
+* Further improvements to the model can be done by training on the NIR PolyUCross dataset and also the CASIA Iris datasets. Try to incorporate differences in positive images i.e. images captured from the same subject in different settings. Enlargement of pupils, and other changes in conditions must be captured in training. Also care to be taken with inclusion/exclusion of periocular features in training set. With increase in number of datasets, enhancing architecture might be considered.
+
+* Once a robust NIR detection model is achieved, a model can be trained on Visible image datasets using the weights from the NIR detection model. 
 
 ## References:
 
