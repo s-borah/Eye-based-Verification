@@ -75,10 +75,10 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 > **Note** - most of the code was implemented using google colab GPU's.
 
 ![Accuracy Curves](resources/accuracy%20curves.png?raw=true)
-<p align="center"><b>Model3 Accuracy Curves (Orange - Validation accuracy; Blue - Training Accuracy)</b></p>
+<p align="center"><b>Model2_65 epochs: Accuracy Curves (Orange - Validation accuracy; Blue - Training Accuracy)</b></p>
 
 ![Loss Curve](resources/loss%20curve.png?raw=true)
-<p align="center"><b>Model3: Loss Curve</b></p>
+<p align="center"><b>Model2_65 epochs: Loss Curve</b></p>
 
 ## Code Present in Repository:
 
