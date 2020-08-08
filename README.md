@@ -1,5 +1,6 @@
 # Eye-based-Verification
-Proposed contact-less attendance system for organizations by verifying identity using iris and periocular region.
+
+> Proposed contact-less attendance system for organizations by verifying identity using iris and periocular region.
 
 ## Abstract:
 
@@ -13,9 +14,11 @@ Further, liveness detection can be incorporated into the system to make it more 
 
 Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-trained ResNet50 (thus, fine tuning was not performed) and removing the last layer. Two architectures were trained by using either 4 fully connected layers (*model0_100.pth* and *model1_100.pth*) or 3 fully connected layers after ResNet50 (*model2_100.pth* and *model3 reg 6e-5.pth*). In both the cases, features are extracted for both input image and database image using pre-trained network. The outputs are merged and passed through two fully connected layers and finally passed through a logistic regression function for binary classification (*whether the images are from the same user or not*).
 
-![Scheme 1](resources/classifier%201.JPG?raw=true)*Scheme 1*
+![Scheme 1](resources/classifier%201.JPG?raw=true)
+<p align="center"><b>Scheme 1</b></p>
 
-![Scheme 2](resources/classifier%202.JPG?raw=true)*Scheme 2*
+![Scheme 2](resources/classifier%202.JPG?raw=true)
+<p align="center"><b>Scheme 2</b></p>
 
 ### The following datasets are relevant to the problem at hand:
 
@@ -60,13 +63,16 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 * **Model2_60 epochs** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). Validation on 0.3 \* MMU dataset.
   - Slightly increased weight decay to 3e-5. Learning rate increased to 0.04.
   - Pos_weight in cost fn further decreased to 0.5 to increase specificity at the cost of sensitivity.
-  - Training accuracy 99.78% and validation accuracy 91.54% at 60 epochs by early stopping.
+  - Training accuracy **99.78%** and validation accuracy **91.54%** at 60 epochs by early stopping.
+  - Results of model2 are the best on the following datasets.
   
-* **Model3** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). Validation on 0.3 \* MMU dataset
-  - Modified weight decay to 6e-5 or larger with 0.08 learning rate or more. 
-  - pos_weight reduced to 0.3.
+* **Model3 (with various weight decay parameters)** (Scheme 2)- Training was done on the IITD dataset + 0.7 \* MMU dataset (11,106 training sets total). Validation on 0.3 \* MMU dataset
+  - Weight_decay of 6e-5 and 4e-5 used. 
+  - Learning rate of 0.075 with decay and pos_weight = 0.3 and 0.4 respectively.
+  - Accuracy after 85 epochs: training accuracy 97% and 84% validation for 6e-5
+  - training accuracy 100% and 88% validation for 4e-5 weight decay
   
-**Note** - most of the code was implemented using google colab GPU's.
+> **Note** - most of the code was implemented using google colab GPU's.
 
 ![Accuracy Curves](resources/accuracy%20curves.png?raw=true)
 <p align="center"><b>Model3 Accuracy Curves (Orange - Validation accuracy; Blue - Training Accuracy)</b></p>
