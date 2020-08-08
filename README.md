@@ -106,7 +106,7 @@ Transfer Learning was applied in **Pytorch** by freezing all the layers of pre-t
 
 * Further improvements to the model can be done by training on the NIR PolyUCross dataset and also the CASIA Iris datasets. Try to incorporate differences in positive images i.e. images captured from the same subject in different settings. Enlargement of pupils, and other changes in conditions must be captured in training. Also care to be taken with inclusion/exclusion of periocular features in training set. With increase in number of datasets, enhancing architecture might be considered.
 
-* Once a robust NIR detection model is achieved, a model can be trained on Visible image datasets using the weights from the NIR detection model. 
+* Once a robust NIR detection model is achieved, another model can be trained on Visible image datasets using the weights from the NIR detection model to expand the scope and practicality of the project.
 
 ## References:
 
